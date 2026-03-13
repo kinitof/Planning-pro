@@ -12102,43 +12102,47 @@ function __dlImg(btn){
 
   window.refreshEmargBadges = refreshEmargBadges;
   async function refreshEmargBadges() {
-    if (!_wid) return;
+    // Récupérer weekId depuis _wid interne ou localStorage
+    var wid = _wid || localStorage.getItem("v13_wid");
+    if (!wid) { console.log("refreshEmargBadges: pas de wid"); return; }
     try {
-      var res = await gs({ action:"getEmarg", weekId:_wid });
-      if (!res.ok) return;
-      var ea = res.emargements || {};
-      document.querySelectorAll(".emarg-badge").forEach(function(b){ b.remove(); });
-      var w = getWeek();
-      if (!w) return;
-      var model = w.model || [];
+      // Lire directement depuis GitHub sans passer par gs()
+      var url = "https://raw.githubusercontent.com/kinitof/Planning-pro/main/data/" + wid + ".json";
+      var r = await fetch(url);
+      if (!r.ok) { console.log("refreshEmargBadges: fichier non trouvé", wid); return; }
+      var d = await r.json();
+      var ea = d.emargements || {};
+      console.log("refreshEmargBadges: emargements=", JSON.stringify(ea));
 
+      // Supprimer anciens badges
+      document.querySelectorAll(".emarg-badge").forEach(function(b){ b.remove(); });
+
+      // Mapper nom -> rowIndex via les cellules existantes
       Object.keys(ea).forEach(function(key) {
         var e = ea[key];
-        var nom, dayKey;
-        if (e && e.nom) {
-          // Nouvelle structure : {nom, dayKey, ts}
-          nom = e.nom;
-          dayKey = e.dayKey;
-        } else {
-          // Ancienne structure : clé = nom
-          nom = key;
-          dayKey = "lun";
-        }
-        var ri = -1;
-        for (var i = 0; i < model.length; i++) {
-          if (model[i] && model[i].name === nom) { ri = i; break; }
-        }
-        if (ri < 0) return;
-        var sel = ".timeCell[data-ri='" + ri + "'][data-dk='" + dayKey + "']";
-        var cell = document.querySelector(sel);
-        if (!cell) {
-          // Essai avec guillemets doubles
-          cell = document.querySelector(".timeCell[data-ri=\"" + ri + "\"][data-dk=\"" + dayKey + "\"]");
-        }
-        if (!cell) return;
-        addLockBadge(cell, key, nom, dayKey);
+        var nom = (e && e.nom) ? e.nom : key;
+        var dayKey = (e && e.dayKey) ? e.dayKey : "lun";
+        console.log("Badge pour:", nom, dayKey);
+
+        // Trouver toutes les timeCell avec ce dayKey
+        var cells = document.querySelectorAll(".timeCell[data-dk='" + dayKey + "']");
+        console.log("Cellules trouvées pour dk=" + dayKey + ":", cells.length);
+
+        // Trouver le bon rowIndex en cherchant le nom du salarié dans la ligne
+        cells.forEach(function(cell) {
+          var ri = cell.getAttribute("data-ri");
+          // Chercher le nom dans la même ligne TR
+          var tr = cell.closest("tr");
+          if (!tr) return;
+          var nameEl = tr.querySelector(".empName, [class*='empN'], td:first-child");
+          var rowText = tr.textContent || "";
+          if (rowText.indexOf(nom) > -1) {
+            addLockBadge(cell, key, nom, dayKey);
+            console.log("Badge ajouté sur ri=" + ri + " dk=" + dayKey);
+          }
+        });
       });
-    } catch(e) { console.error("refreshEmargBadges:", e); }
+    } catch(e) { console.error("refreshEmargBadges erreur:", e); }
   }
 
   /* ── SUIVI ── */
