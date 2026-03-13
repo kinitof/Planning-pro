@@ -150,6 +150,17 @@ async function init(){
   try{
     var res=await gs({action:"getPlanning",weekId:weekId,token:token});
     if(!res.ok){err("Acc\u00E8s refus\u00E9",res.error||"Lien invalide ou expir\u00E9.");return;}
+    // Adapter la structure GitHub au format attendu
+    if(res.data) {
+      var d=res.data;
+      var wData = typeof d.weekData==="string" ? JSON.parse(d.weekData||"{}") : (d.weekData||{});
+      var emp=(d.employees||[]).find(function(e){return e.token===token;});
+      if(!emp){err("Acc\u00E8s refus\u00E9","Lien invalide ou expir\u00E9.");return;}
+      res.employee={empName:emp.name,email:emp.email};
+      res.week={weekData:JSON.stringify(wData)};
+      res.emargements=Object.keys(d.emargements||{}).map(function(k){return {dayKey:k};});
+      res.modifs=(d.modifs||[]).filter(function(m){return m.salarie===emp.name;});
+    }
     empData=res.employee; weekData=res.week;
     var parsed=JSON.parse(res.week.weekData||"{}");
     var em=(parsed.model||[]).find(function(e){return e.name===empData.empName;});
