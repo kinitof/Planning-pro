@@ -2,11 +2,11 @@
   "action": "publishWeek",
   "weekId": "19-01-2026",
   "weekLabel": "19/01/2026",
-  "weekData": "{\"id\":\"d95604ef\",\"label\":\"19/01/2026\",\"model\":[{\"name\":\"SalariÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ©\",\"base\":\"35:00\",\"shifts\":{\"lun\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"mar\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"mer\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"jeu\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"ven\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"sam\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"dim\":{\"s1\":\"\",\"e1\":\"\",\"s2\":\"\",\"e2\":\"\",\"status\":\"REPOS\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"}},\"cumul\":420,\"_weekStatus\":null,\"_cumulStatus\":\"real\"},{\"name\":\"elodie\",\"base\":\"35:00\",\"shifts\":{\"lun\":{\"s1\":\"07:00\",\"e1\":\"14:30\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\"},\"mar\":{\"s1\":\"07:00\",\"e1\":\"15:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\"},\"mer\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"jeu\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"ven\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"sam\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"CUSTOM:LABO\",\"paidMin\":420,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"dim\":{\"s1\":\"\",\"e1\":\"\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"}},\"cumul\":840,\"_weekStatus\":null,\"_cumulStatus\":\"real\",\"poste1\":\"Vente\",\"poste2\":\"\",\"email\":\"christophe.bern123@gmail.com\",\"phone\":\"\",\"cumulDepart\":420}],\"_status\":\"has_data\"}",
+  "weekData": "{\"id\":\"d95604ef\",\"label\":\"19/01/2026\",\"model\":[{\"name\":\"SalariÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ©\",\"base\":\"35:00\",\"shifts\":{\"lun\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"mar\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"mer\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"jeu\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"ven\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"sam\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"dim\":{\"s1\":\"\",\"e1\":\"\",\"s2\":\"\",\"e2\":\"\",\"status\":\"REPOS\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"}},\"cumul\":420,\"_weekStatus\":null,\"_cumulStatus\":\"real\"},{\"name\":\"elodie\",\"base\":\"35:00\",\"shifts\":{\"lun\":{\"s1\":\"07:00\",\"e1\":\"14:30\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\"},\"mar\":{\"s1\":\"07:00\",\"e1\":\"15:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\"},\"mer\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"jeu\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"ven\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"sam\":{\"s1\":\"07:00\",\"e1\":\"14:00\",\"s2\":\"\",\"e2\":\"\",\"status\":\"CUSTOM:LABO\",\"paidMin\":420,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"dim\":{\"s1\":\"\",\"e1\":\"\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"}},\"cumul\":840,\"_weekStatus\":null,\"_cumulStatus\":\"real\",\"poste1\":\"Vente\",\"poste2\":\"\",\"email\":\"christophe.bern123@gmail.com\",\"phone\":\"\",\"cumulDepart\":420}],\"_status\":\"has_data\"}",
   "managerEmail": "christophe.bern37@gmail.com",
   "employees": [
     {
-      "name": "SalariÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ©",
+      "name": "SalariÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ©",
       "email": "",
       "phone": "",
       "token": "nhnz11pnmmp2nonl"
@@ -25,7 +25,7 @@
       "token": "c9ybjchgmmp2kv6c",
       "empName": "elodie",
       "dayKey": "lun",
-      "originalShift": "07:00ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ14:30",
+      "originalShift": "07:00ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ14:30",
       "proposedShift": "07:00-15:15",
       "motif": "retard",
       "id": 1773417013464
@@ -36,7 +36,7 @@
       "token": "c9ybjchgmmp2kv6c",
       "empName": "elodie",
       "dayKey": "mar",
-      "originalShift": "07:00â15:00",
+      "originalShift": "07:00Ã¢ÂÂ15:00",
       "proposedShift": "07:00-17:00",
       "motif": "ok",
       "id": 1773417215679
@@ -48,6 +48,12 @@
       "dayKey": "lun",
       "ts": 1773417142530,
       "signedAt": "2026-03-13T15:52:22.525Z"
+    },
+    "elodie_mar": {
+      "nom": "elodie",
+      "dayKey": "mar",
+      "ts": 1773417380363,
+      "signedAt": "2026-03-13T15:56:20.358Z"
     }
   }
 }
