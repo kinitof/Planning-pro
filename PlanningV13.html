@@ -6066,6 +6066,9 @@ Cela remplacera toutes les données actuelles.`)) return;
             td.colSpan = 2;
             td.rowSpan = 1;
             td.style.cssText = "position:relative;padding:2px 3px;vertical-align:middle;cursor:pointer;";
+            td.dataset.wid = week.id;
+            td.dataset.ri  = rowIndex;
+            td.dataset.dk  = d.key;
 
             const hasHours = sh.s1 && sh.e1;
 
