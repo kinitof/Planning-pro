@@ -12070,6 +12070,9 @@ function __dlImg(btn){
     // Supprimer badge existant pour cette cellule
     var old = cell.querySelector(".emarg-badge");
     if (old) old.remove();
+    // S'assurer que la cellule est en position relative
+    cell.style.position = "relative";
+    cell.style.overflow = "visible";
 
     var locked = _lockedCells[key] || false;
     var badge = document.createElement("div");
