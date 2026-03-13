@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mon Planning</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;background:#f1f5f9;min-height:100vh;}
+.hdr{background:linear-gradient(135deg,#1e3a5f,#3d5af1);padding:16px 20px;color:#fff;}
+.hdr h1{font-size:19px;font-weight:900;}
+.hdr .sub{font-size:12px;color:#a5b4fc;margin-top:2px;}
+.emp{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border-radius:20px;padding:4px 12px;font-size:13px;font-weight:700;margin-top:7px;}
+.wrap{max-width:660px;margin:0 auto;padding:14px;}
+.recap{background:linear-gradient(135deg,#1e3a5f,#3d5af1);border-radius:12px;padding:13px 16px;color:#fff;margin-bottom:13px;display:flex;justify-content:space-between;align-items:center;}
+.recap .lbl{font-size:10px;color:#a5b4fc;font-weight:700;}
+.recap .val{font-size:21px;font-weight:900;}
+.card{background:#fff;border-radius:13px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,.07);margin-bottom:13px;}
+.ctitle{font-size:13px;font-weight:800;color:#1a1f3a;margin-bottom:11px;}
+.drow{display:flex;align-items:center;gap:7px;border:1.5px solid #e2e8f0;border-radius:10px;padding:8px 11px;margin-bottom:6px;background:#fafafa;}
+.drow.work{background:#fff;border-color:#c7d2fe;}
+.drow.repos{background:#fefce8;border-color:#fde68a;}
+.drow.emgd{border-color:#bbf7d0;background:#f0fdf4;}
+.drow.pend{border-color:#fed7aa;background:#fff7ed;}
+.dn{font-size:11px;font-weight:800;color:#374151;min-width:26px;text-transform:uppercase;}
+.dd{font-size:10px;color:#9ca3af;min-width:36px;}
+.ds{flex:1;font-size:12px;font-weight:700;color:#1a1f3a;}
+.ds.repos{color:#a16207;} .ds.abs{color:#dc2626;}
+.be{background:#059669;color:#fff;border:none;border-radius:7px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;}
+.be:disabled{background:#d1fae5;color:#6ee7b7;cursor:default;}
+.bm{background:#f97316;color:#fff;border:none;border-radius:7px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;}
+.ei{font-size:10px;color:#059669;font-weight:700;white-space:nowrap;}
+.bp{font-size:9px;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;border-radius:5px;padding:2px 5px;font-weight:700;margin-left:4px;}
+.ba{font-size:9px;background:#f0fdf4;color:#059669;border:1px solid #bbf7d0;border-radius:5px;padding:2px 5px;font-weight:700;margin-left:4px;}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;display:none;align-items:center;justify-content:center;}
+.ov.on{display:flex;}
+.modal{background:#fff;border-radius:15px;padding:20px;max-width:400px;width:94%;box-shadow:0 18px 56px rgba(0,0,0,.22);}
+.modal h3{font-size:15px;font-weight:900;color:#1a1f3a;margin-bottom:13px;}
+.fg{margin-bottom:10px;}
+.fg label{font-size:12px;font-weight:700;color:#374151;display:block;margin-bottom:3px;}
+.fg input,.fg textarea{width:100%;border:1.5px solid #e2e8f0;border-radius:8px;padding:7px 9px;font-size:13px;font-family:inherit;}
+.fg input:focus,.fg textarea:focus{outline:none;border-color:#3d5af1;}
+.trow{display:flex;gap:7px;align-items:center;}
+.trow span{color:#9ca3af;font-size:12px;}
+.bsub{width:100%;background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;border:none;border-radius:10px;padding:11px;font-size:13px;font-weight:800;cursor:pointer;margin-top:5px;}
+.bcan{width:100%;background:#f1f5f9;color:#374151;border:none;border-radius:10px;padding:9px;font-size:13px;font-weight:700;cursor:pointer;margin-top:6px;}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);padding:11px 20px;border-radius:10px;font-weight:700;font-size:13px;z-index:999;box-shadow:0 4px 16px rgba(0,0,0,.22);pointer-events:none;opacity:0;transition:opacity .3s;font-family:inherit;color:#fff;white-space:nowrap;}
+.ss{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;padding:20px;}
+.ss .ico{font-size:48px;margin-bottom:11px;}
+.ss h2{font-size:17px;font-weight:800;color:#1a1f3a;margin-bottom:7px;}
+.ss p{font-size:13px;color:#64748b;line-height:1.6;max-width:300px;}
+</style>
+</head>
+<body>
+<div id="toast"></div>
+
+<div class="ov" id="ovModif">
+  <div class="modal">
+    <h3>&#9999; Proposer une modification</h3>
+    <div id="mctx" style="background:#fff7ed;border-radius:8px;padding:8px 11px;margin-bottom:13px;font-size:12px;color:#c2410c;font-weight:700;line-height:1.5;"></div>
+    <div class="fg"><label>Nouveau cr&#233;neau matin <span style="color:#dc2626">*</span></label>
+      <div class="trow"><input type="time" id="ms1"><span>&#8594;</span><input type="time" id="me1"></div></div>
+    <div class="fg"><label>Apr&#232;s-midi (optionnel)</label>
+      <div class="trow"><input type="time" id="ms2"><span>&#8594;</span><input type="time" id="me2"></div></div>
+    <div class="fg"><label>Motif <span style="color:#dc2626">*</span></label>
+      <textarea id="mmot" rows="2" placeholder="Ex&#160;: Rendez-vous m&#233;dical, &#233;change avec coll&#232;gue..."></textarea></div>
+    <button class="bsub" id="btnSendMod">&#128228; Envoyer la demande</button>
+    <button class="bcan" onclick="document.getElementById('ovModif').classList.remove('on')">Annuler</button>
+  </div>
+</div>
+
+<div id="app"><div class="ss"><div class="ico">&#9203;</div><h2>Chargement...</h2><p>R&#233;cup&#233;ration de votre planning</p></div></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ══ CONFIG ══ MEME URL QUE DANS PlanningV13.html ══════════ */
+var GS_WEBHOOK = "https://script.google.com/macros/s/AKfycbzusp6cGsArtRcXV0QGdMndNyiEnqS_65ec3udFQBrrxCI7tmLfr_cjMxHLNiFk5Gai/exec";
+/* ══════════════════════════════════════════════════════════ */
+
+var params  = new URLSearchParams(location.search);
+var weekId  = params.get("week");
+var token   = params.get("token");
+
+var DAYS = [
+  {k:"lun",s:"Lun",f:"Lundi"},   {k:"mar",s:"Mar",f:"Mardi"},
+  {k:"mer",s:"Mer",f:"Mercredi"},{k:"jeu",s:"Jeu",f:"Jeudi"},
+  {k:"ven",s:"Ven",f:"Vendredi"},{k:"sam",s:"Sam",f:"Samedi"},
+  {k:"dim",s:"Dim",f:"Dimanche"}
+];
+
+var empData={}, weekData={}, shifts={}, emargMap={}, modifMap={}, curDay=null;
+
+/* ── appel serveur ── */
+async function gs(p){
+  var r=await fetch(GS_WEBHOOK,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(p)});
+  var t=await r.text(); try{return JSON.parse(t);}catch(e){return{ok:false,error:t};}
+}
+
+/* ── init ── */
+async function init(){
+  if(!weekId||!token){err("Lien invalide","Ce lien est incomplet. Contactez votre responsable.");return;}
+  if(!GS_WEBHOOK||GS_WEBHOOK==="VOTRE_URL_APPS_SCRIPT"){err("Non configur\u00E9","L'URL du serveur n'est pas renseign\u00E9e.");return;}
+  try{
+    var res=await gs({action:"getPlanning",weekId:weekId,token:token});
+    if(!res.ok){err("Acc\u00E8s refus\u00E9",res.error||"Lien invalide ou expir\u00E9.");return;}
+    empData=res.employee; weekData=res.week;
+    var parsed=JSON.parse(res.week.weekData||"{}");
+    var em=(parsed.model||[]).find(function(e){return e.name===empData.empName;});
+    shifts=em?em.shifts||{}:{};
+    emargMap={}; (res.emargements||[]).forEach(function(e){emargMap[e.dayKey]=e;});
+    modifMap={}; (res.modifs||[]).forEach(function(m){modifMap[m.dayKey]=m;});
+    render();
+  }catch(e){err("Erreur",e.message);}
+}
+
+/* ── calcul total ── */
+function total(){
+  var min=0;
+  DAYS.forEach(function(d){
+    var sh=shifts[d.k]; if(!sh||sh.status)return;
+    var tm=function(t){if(!t)return 0;var p=t.split(":");return (+p[0])*60+(+p[1]);};
+    if(sh.s1&&sh.e1)min+=Math.max(0,tm(sh.e1)-tm(sh.s1));
+    if(sh.s2&&sh.e2)min+=Math.max(0,tm(sh.e2)-tm(sh.s2));
+  });
+  return Math.floor(min/60)+"h"+(min%60>0?String(min%60).padStart(2,"0"):"");
+}
+
+/* ── dates de semaine ── */
+function dates(label){
+  var r={};if(!label)return r;
+  var m=label.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+  if(!m)return r;
+  var s=new Date(+m[3],+m[2]-1,+m[1]);
+  DAYS.forEach(function(d,i){var dt=new Date(s);dt.setDate(dt.getDate()+i);r[d.k]=dt.getDate()+"/"+(dt.getMonth()+1);});
+  return r;
+}
+
+/* ── rendu ── */
+function render(){
+  var app=document.getElementById("app"); app.innerHTML="";
+  var wl=weekData.weekLabel||"";
+  var dt=dates(wl);
+
+  var hdr=document.createElement("div"); hdr.className="hdr";
+  hdr.innerHTML='<h1>&#128197; Mon Planning</h1><div class="sub">Semaine du '+wl+'</div><div class="emp">&#128100; '+empData.empName+'</div>';
+  app.appendChild(hdr);
+
+  var wrap=document.createElement("div"); wrap.className="wrap";
+
+  var recap=document.createElement("div"); recap.className="recap";
+  recap.innerHTML='<div><div class="lbl">TOTAL SEMAINE</div><div class="val">'+total()+'</div></div>';
+  wrap.appendChild(recap);
+
+  var card=document.createElement("div"); card.className="card";
+  card.innerHTML='<div class="ctitle">&#128203; Vos horaires</div>';
+
+  DAYS.forEach(function(d){
+    var sh=shifts[d.k], emg=emargMap[d.k], mod=modifMap[d.k];
+    var row=document.createElement("div"); row.className="drow";
+    var txt="Pas de planning", cls="", canWork=false;
+
+    if(sh){
+      if(sh.status==="REPOS"){txt="Repos";cls="repos";row.classList.add("repos");}
+      else if(sh.status==="CP"){txt="Cong\u00E9 pay\u00E9";cls="abs";}
+      else if(sh.status==="MAL"){txt="Arr\u00EAt maladie";cls="abs";}
+      else if(sh.status==="ABS"){txt="Absence";cls="abs";}
+      else if(sh.status==="CONGE"){txt="Cong\u00E9";cls="abs";}
+      else if(sh.status){txt=sh.status.replace("CUSTOM:","");}
+      else if(sh.s1&&sh.e1){
+        txt=sh.s1+"\u2192"+sh.e1+(sh.s2&&sh.e2?" / "+sh.s2+"\u2192"+sh.e2:"");
+        row.classList.add("work"); canWork=true;
+      }
+    }
+    if(emg) row.classList.add("emgd");
+    if(mod&&mod.status==="pending") row.classList.add("pend");
+
+    var badge="";
+    if(mod){
+      if(mod.status==="pending") badge='<span class="bp">\u270F En attente</span>';
+      else if(mod.status==="approved") badge='<span class="ba">\u2705 Valid\u00E9e</span>';
+    }
+
+    var btns=document.createElement("div"); btns.style.cssText="display:flex;flex-direction:column;gap:3px;align-items:flex-end;";
+    if(canWork){
+      if(emg){
+        var ei=document.createElement("span"); ei.className="ei";
+        ei.textContent="\u2705 "+new Date(emg.signedAt).toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"});
+        btns.appendChild(ei);
+      } else {
+        var be=document.createElement("button"); be.className="be";
+        be.textContent="\u2705 \u00C9marger";
+        (function(dk,df,b){b.addEventListener("click",function(){doEmarge(dk,df,b);});})(d.k,d.f,be);
+        btns.appendChild(be);
+      }
+      if(!mod){
+        var bm=document.createElement("button"); bm.className="bm";
+        bm.textContent="\u270F Modifier";
+        (function(dk,dt2,df){bm.addEventListener("click",function(){openModif(dk,dt2,df);});})(d.k,txt,d.f);
+        btns.appendChild(bm);
+      }
+    }
+
+    row.innerHTML='<div class="dn">'+d.s+'</div><div class="dd">'+(dt[d.k]||"")+'</div><div class="ds '+cls+'">'+txt+badge+'</div>';
+    row.appendChild(btns);
+    card.appendChild(row);
+  });
+
+  wrap.appendChild(card);
+  var foot=document.createElement("div"); foot.style.cssText="text-align:center;font-size:11px;color:#94a3b8;padding:8px;";
+  foot.textContent="\uD83D\uDD12 Lien personnel \u2014 Planning PRO V13";
+  wrap.appendChild(foot);
+  app.appendChild(wrap);
+}
+
+/* ── émargement ── */
+async function doEmarge(dayKey,dayFull,btn){
+  btn.textContent="\u23F3"; btn.disabled=true;
+  try{
+    var res=await gs({action:"emarge",weekId:weekId,token:token,empName:empData.empName,dayKey:dayKey,signedAt:new Date().toISOString()});
+    if(!res.ok)throw new Error(res.error);
+    emargMap[dayKey]={signedAt:new Date().toISOString()};
+    toast("\u2705 \u00C9margement enregistr\u00E9 \u2014 "+dayFull,"#059669"); render();
+  }catch(e){btn.textContent="\u2705 \u00C9marger";btn.disabled=false;toast("\u274C "+e.message,"#dc2626");}
+}
+
+/* ── modification ── */
+function openModif(dayKey,current,dayFull){
+  curDay={k:dayKey,f:dayFull,cur:current};
+  document.getElementById("mctx").textContent=dayFull+" \u2014 Actuel\u00A0: "+current;
+  ["ms1","me1","ms2","me2","mmot"].forEach(function(id){document.getElementById(id).value="";});
+  document.getElementById("ovModif").classList.add("on");
+}
+
+document.getElementById("btnSendMod").addEventListener("click",async function(){
+  if(!curDay)return;
+  var s1=document.getElementById("ms1").value, e1=document.getElementById("me1").value;
+  var s2=document.getElementById("ms2").value, e2=document.getElementById("me2").value;
+  var mot=document.getElementById("mmot").value.trim();
+  if(!s1||!e1){toast("\u26A0 Saisissez un cr\u00E9neau d\u00E9but et fin","#f97316");return;}
+  if(!mot){toast("\u26A0 Le motif est obligatoire","#f97316");return;}
+  var proposed=s1+"-"+e1+(s2&&e2?"/"+s2+"-"+e2:"");
+  var btn=this; btn.textContent="\u23F3 Envoi..."; btn.disabled=true;
+  try{
+    var res=await gs({action:"proposeModif",weekId:weekId,token:token,empName:empData.empName,dayKey:curDay.k,originalShift:curDay.cur,proposedShift:proposed,motif:mot});
+    if(!res.ok)throw new Error(res.error);
+    modifMap[curDay.k]={status:"pending"};
+    document.getElementById("ovModif").classList.remove("on");
+    toast("\u2705 Demande envoy\u00E9e ! Votre responsable va la valider.","#059669"); render();
+  }catch(e){toast("\u274C "+e.message,"#dc2626");}
+  finally{btn.textContent="\uD83D\uDCE4 Envoyer la demande";btn.disabled=false;}
+});
+
+/* ── toast ── */
+var _tt=null;
+function toast(msg,col){
+  var el=document.getElementById("toast");
+  el.textContent=msg; el.style.background=col||"#1a1f3a"; el.style.opacity="1";
+  clearTimeout(_tt); _tt=setTimeout(function(){el.style.opacity="0";},3400);
+}
+function err(title,msg){
+  document.getElementById("app").innerHTML='<div class="ss"><div class="ico">\u274C</div><h2>'+title+'</h2><p>'+msg+'</p></div>';
+}
+
+init();
+}());
+</script>
+</body>
+</html>
