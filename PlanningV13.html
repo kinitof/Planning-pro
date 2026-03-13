@@ -11977,6 +11977,31 @@ function __dlImg(btn){
         });
       })(u, cpb);
       row.appendChild(inp); row.appendChild(cpb);
+
+      // Bouton mailto
+      if (t.email) {
+        var ww = getWeek();
+        var wl = ww ? (ww.label || id) : id;
+        var mgr = document.getElementById("v13em").value.trim() || "Votre responsable";
+        var mailBtn = document.createElement("button");
+        mailBtn.textContent = "\uD83D\uDCE7";
+        mailBtn.title = "Envoyer par email";
+        mailBtn.style.cssText = "background:#059669;color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:13px;cursor:pointer;flex-shrink:0;";
+        (function(email, lien, nom, semaine, manager) {
+          mailBtn.addEventListener("click", function() {
+            var subj = encodeURIComponent("Votre planning - Semaine du " + semaine);
+            var bod  = encodeURIComponent(
+              "Bonjour " + nom + ",\n\n" +
+              "Votre planning de la semaine du " + semaine + " est disponible.\n\n" +
+              "Consultez et emargez via ce lien :\n" + lien + "\n\n" +
+              "Bonne semaine !\n" + manager
+            );
+            window.location.href = "mailto:" + email + "?subject=" + subj + "&body=" + bod;
+          });
+        })(t.email, u, t.name, wl, mgr);
+        row.appendChild(mailBtn);
+      }
+
       card.appendChild(top); card.appendChild(row); el.appendChild(card);
     });
     open("v13lnk");
