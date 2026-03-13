@@ -2049,7 +2049,7 @@
 </style>
   <!-- ===== V13 COLLAB HEAD ===== -->
   <script>
-    window.GS_WEBHOOK       = "https://script.google.com/macros/s/AKfycbwbdq_wERp1eO2pp9tIVzeCJoWTlfzgxd6fQU33gd_GeK0vYGMHFllqEvkU6LkI0mop/exec"; /* URL Apps Script */
+    window.GS_WEBHOOK       = "https://script.google.com/macros/s/AKfycbzChiHo6VVcDZRwWykKnS_whapyKTlz05XdxTuKIVAC3PAPtOVoGthaqP9-jNsFffC2/exec"; /* URL Apps Script */
     window.GS_MANAGER_EMAIL = ""; /* Email responsable (optionnel) */
   </script>
   <style>
@@ -11806,10 +11806,30 @@ function __dlImg(btn){
   async function gs(p) {
     var u = url();
     if (!u) throw new Error("URL Apps Script non configuree.");
-    var encoded = encodeURIComponent(JSON.stringify(p));
-    var r = await fetch(u + "?payload=" + encoded, { method:"GET", redirect:"follow" });
-    var t = await r.text();
-    try { return JSON.parse(t); } catch(e) { return { ok:false, error:t }; }
+    return new Promise(function(resolve, reject) {
+      var cbName = "v13cb_" + Date.now() + "_" + Math.floor(Math.random()*9999);
+      var script = document.createElement("script");
+      var timer = setTimeout(function() {
+        cleanup();
+        resolve({ ok:false, error:"Timeout" });
+      }, 15000);
+      function cleanup() {
+        clearTimeout(timer);
+        delete window[cbName];
+        if (script.parentNode) script.parentNode.removeChild(script);
+      }
+      window[cbName] = function(data) {
+        cleanup();
+        resolve(data);
+      };
+      script.onerror = function() {
+        cleanup();
+        resolve({ ok:false, error:"Erreur reseau" });
+      };
+      var encoded = encodeURIComponent(JSON.stringify(p));
+      script.src = u + "?payload=" + encoded + "&callback=" + cbName;
+      document.head.appendChild(script);
+    });
   }
 
   /* toast */
