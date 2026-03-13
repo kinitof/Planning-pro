@@ -2076,6 +2076,7 @@
     .v13ec.ok{background:#f0fdf4;border-color:#bbf7d0;}
   </style>
   <!-- ===== V13 COLLAB HEAD END ===== -->
+  <script src="config.js"></script>
 </head>
 <!-- =========================
      PARTIE 2 / 4 — BODY (HTML)
@@ -11807,7 +11808,7 @@ function __dlImg(btn){
   function url() { return window.GS_WEBHOOK || localStorage.getItem("v13_wh") || ""; }
 
   // ===== GITHUB API CONFIG =====
-  var GH_TOKEN  = "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";
+  var GH_TOKEN  = window.GH_TOKEN || "";
   var GH_OWNER  = "kinitof";
   var GH_REPO   = "Planning-pro";
   var GH_BRANCH = "main";
