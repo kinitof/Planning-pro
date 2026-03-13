@@ -11884,7 +11884,7 @@ function __dlImg(btn){
     }
     if (action === "getEmarg") {
       var d6 = await ghRead(path);
-      return { ok: true, emargements: (d6 && d6.emargements) ? d6.emargements : {} };
+      return { ok: true, emargements: (d6 && d6.emargements) ? d6.emargements : {} }; // objet {nom:{ts,sig}}
     }
     return { ok: false, error: "Action inconnue" };
   }
@@ -12080,10 +12080,21 @@ function __dlImg(btn){
     try {
       var res = await gs({ action:"getEmarg", weekId:_wid });
       if (!res.ok) throw new Error(res.error);
-      var ea = res.emargements || [], w = getWeek();
+      var eaRaw = res.emargements || {}, w = getWeek();
       var names = w ? (w.model||[]).map(function(e){return e.name;}) : [];
       var DK = ["lun","mar","mer","jeu","ven","sam","dim"], DL = ["Lu","Ma","Me","Je","Ve","Sa","Di"];
       if (!names.length) { el.innerHTML = '<div style="text-align:center;color:#94a3b8;padding:24px;">Aucun salari\u00E9</div>'; return; }
+      // Convertir structure GitHub {nom_jour:{nom,dayKey,ts}} en tableau
+      var ea = [];
+      Object.keys(eaRaw).forEach(function(key) {
+        var e = eaRaw[key];
+        if (e.nom && e.dayKey) {
+          ea.push({ empName: e.nom, dayKey: e.dayKey, signedAt: e.signedAt || e.ts });
+        } else {
+          // ancienne structure {nom:{ts}} — compatibilité
+          ea.push({ empName: key, dayKey: "lun", signedAt: e.ts });
+        }
+      });
       el.innerHTML = "";
       /* header */
       var hr = document.createElement("div"); hr.style.cssText = "display:grid;grid-template-columns:110px repeat(7,1fr);gap:3px;margin-bottom:4px;";

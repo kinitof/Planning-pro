@@ -61,9 +61,9 @@ body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;background:#f1f5f9;min
     <h3>&#9999; Proposer une modification</h3>
     <div id="mctx" style="background:#fff7ed;border-radius:8px;padding:8px 11px;margin-bottom:13px;font-size:12px;color:#c2410c;font-weight:700;line-height:1.5;"></div>
     <div class="fg"><label>Nouveau cr&#233;neau matin <span style="color:#dc2626">*</span></label>
-      <div class="trow"><input type="time" id="ms1"><span>&#8594;</span><input type="time" id="me1"></div></div>
+      <div class="trow"><input type="text" id="ms1" placeholder="ex: 7 ou 700 ou 07:00" inputmode="numeric"><span>&#8594;</span><input type="text" id="me1" placeholder="ex: 14 ou 1400" inputmode="numeric"></div></div>
     <div class="fg"><label>Apr&#232;s-midi (optionnel)</label>
-      <div class="trow"><input type="time" id="ms2"><span>&#8594;</span><input type="time" id="me2"></div></div>
+      <div class="trow"><input type="text" id="ms2" placeholder="optionnel" inputmode="numeric"><span>&#8594;</span><input type="text" id="me2" placeholder="optionnel" inputmode="numeric"></div></div>
     <div class="fg"><label>Motif <span style="color:#dc2626">*</span></label>
       <textarea id="mmot" rows="2" placeholder="Ex&#160;: Rendez-vous m&#233;dical, &#233;change avec coll&#232;gue..."></textarea></div>
     <button class="bsub" id="btnSendMod">&#128228; Envoyer la demande</button>
@@ -129,7 +129,13 @@ async function gs(p){
     }
     if (action === "emarge") {
       if (!existing.emargements) existing.emargements = {};
-      existing.emargements[p.salarie] = { ts: Date.now() };
+      var eKey = (p.empName || p.salarie) + "_" + (p.dayKey || "lun");
+      existing.emargements[eKey] = { 
+        nom: p.empName || p.salarie,
+        dayKey: p.dayKey || "lun",
+        ts: Date.now(),
+        signedAt: p.signedAt || new Date().toISOString()
+      };
     }
     var content = btoa(unescape(encodeURIComponent(JSON.stringify(existing, null, 2))));
     var body = { message: action, content: content, branch: "main" };
@@ -169,6 +175,8 @@ async function init(){
     emargMap={}; (res.emargements||[]).forEach(function(e){emargMap[e.dayKey]=e;});
     modifMap={}; (res.modifs||[]).forEach(function(m){modifMap[m.dayKey]=m;});
     render();
+    applyParseTime("ms1"); applyParseTime("me1");
+    applyParseTime("ms2"); applyParseTime("me2");
   }catch(e){err("Erreur",e.message);}
 }
 
@@ -290,11 +298,47 @@ function openModif(dayKey,current,dayFull){
   document.getElementById("ovModif").classList.add("on");
 }
 
+
+function parseTimeInput(val) {
+  if (!val) return "";
+  val = val.trim().replace(/[hH]/g, ":").replace(/[^0-9:]/g, "");
+  if (!val) return "";
+  var h, m;
+  if (val.indexOf(":") > -1) {
+    var parts = val.split(":");
+    h = parseInt(parts[0], 10);
+    m = parseInt(parts[1] || "0", 10);
+  } else {
+    var n = parseInt(val, 10);
+    if (val.length <= 2) { h = n; m = 0; }
+    else if (val.length === 3) { h = parseInt(val[0], 10); m = parseInt(val.slice(1), 10); }
+    else { h = parseInt(val.slice(0, 2), 10); m = parseInt(val.slice(2), 10); }
+  }
+  if (isNaN(h) || h < 0 || h > 23) return "";
+  if (isNaN(m) || m < 0 || m > 59) m = 0;
+  return (h < 10 ? "0" + h : "" + h) + ":" + (m < 10 ? "0" + m : "" + m);
+}
+
+function applyParseTime(inputId) {
+  var el = document.getElementById(inputId);
+  if (!el) return;
+  el.addEventListener("change", function() {
+    var parsed = parseTimeInput(this.value);
+    if (parsed) this.value = parsed;
+  });
+  el.addEventListener("blur", function() {
+    var parsed = parseTimeInput(this.value);
+    if (parsed) this.value = parsed;
+  });
+}
+
 document.getElementById("btnSendMod").addEventListener("click",async function(){
   if(!curDay)return;
   var s1=document.getElementById("ms1").value, e1=document.getElementById("me1").value;
   var s2=document.getElementById("ms2").value, e2=document.getElementById("me2").value;
   var mot=document.getElementById("mmot").value.trim();
+  s1=parseTimeInput(s1); e1=parseTimeInput(e1);
+  if(s2) s2=parseTimeInput(s2); if(e2) e2=parseTimeInput(e2);
   if(!s1||!e1){toast("\u26A0 Saisissez un cr\u00E9neau d\u00E9but et fin","#f97316");return;}
   if(!mot){toast("\u26A0 Le motif est obligatoire","#f97316");return;}
   var proposed=s1+"-"+e1+(s2&&e2?"/"+s2+"-"+e2:"");
