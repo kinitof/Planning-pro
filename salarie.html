@@ -103,6 +103,10 @@ async function gs(p){
     var r = await fetch(rawUrl);
     if (r.status === 404) return { ok:true, data:null };
     var d = await r.json();
+    // weekData peut être une string encodée — la parser
+    if (d && typeof d.weekData === "string") {
+      try { d.weekData = JSON.parse(d.weekData); } catch(e) {}
+    }
     return { ok:true, data:d };
   }
   if (action === "proposeModif" || action === "emarge") {
