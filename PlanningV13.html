@@ -11805,34 +11805,89 @@ function __dlImg(btn){
 
   /* webhook */
   function url() { return window.GS_WEBHOOK || localStorage.getItem("v13_wh") || ""; }
-  async function gs(p) {
-    var u = url();
-    if (!u) throw new Error("URL Apps Script non configuree.");
-    return new Promise(function(resolve, reject) {
-      var cbName = "v13cb_" + Date.now() + "_" + Math.floor(Math.random()*9999);
-      var script = document.createElement("script");
-      var timer = setTimeout(function() {
-        cleanup();
-        resolve({ ok:false, error:"Timeout" });
-      }, 15000);
-      function cleanup() {
-        clearTimeout(timer);
-        delete window[cbName];
-        if (script.parentNode) script.parentNode.removeChild(script);
-      }
-      window[cbName] = function(data) {
-        cleanup();
-        resolve(data);
-      };
-      script.onerror = function() {
-        cleanup();
-        resolve({ ok:false, error:"Erreur reseau" });
-      };
-      var encoded = encodeURIComponent(JSON.stringify(p));
-      script.src = u + "?payload=" + encoded + "&callback=" + cbName;
-      document.head.appendChild(script);
+
+  // ===== GITHUB API CONFIG =====
+  var GH_TOKEN  = "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";
+  var GH_OWNER  = "kinitof";
+  var GH_REPO   = "Planning-pro";
+  var GH_BRANCH = "main";
+  var GH_API    = "https://api.github.com/repos/" + GH_OWNER + "/" + GH_REPO + "/contents/";
+
+  async function ghRead(path) {
+    var r = await fetch(GH_API + path + "?ref=" + GH_BRANCH, {
+      headers: { "Authorization": "token " + GH_TOKEN, "Accept": "application/vnd.github.v3+json" }
     });
+    if (r.status === 404) return null;
+    var d = await r.json();
+    try { return JSON.parse(atob(d.content.replace(/\n/g,""))); } catch(e) { return null; }
   }
+
+  async function ghWrite(path, data, msg) {
+    // Lire le SHA actuel si le fichier existe
+    var sha = null;
+    var r0 = await fetch(GH_API + path + "?ref=" + GH_BRANCH, {
+      headers: { "Authorization": "token " + GH_TOKEN, "Accept": "application/vnd.github.v3+json" }
+    });
+    if (r0.ok) { var d0 = await r0.json(); sha = d0.sha; }
+    var content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+    var body = { message: msg || "update", content: content, branch: GH_BRANCH };
+    if (sha) body.sha = sha;
+    var r = await fetch(GH_API + path, {
+      method: "PUT",
+      headers: { "Authorization": "token " + GH_TOKEN, "Accept": "application/vnd.github.v3+json", "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    return r.ok;
+  }
+
+  async function gs(p) {
+    var action = p.action;
+    var weekId = p.weekId || "";
+    var path   = "data/" + weekId + ".json";
+
+    if (action === "publishWeek") {
+      var ok = await ghWrite(path, p, "Publish week " + weekId);
+      return { ok: ok };
+    }
+    if (action === "getPlanning") {
+      var d = await ghRead(path);
+      return { ok: true, data: d };
+    }
+    if (action === "getPending") {
+      var d2 = await ghRead(path);
+      var modifs = (d2 && d2.modifs) ? d2.modifs.filter(function(m){ return m.status === "pending"; }) : [];
+      return { ok: true, modifs: modifs };
+    }
+    if (action === "proposeModif") {
+      var d3 = await ghRead(path) || {};
+      if (!d3.modifs) d3.modifs = [];
+      p.id = Date.now();
+      p.status = "pending";
+      d3.modifs.push(p);
+      var ok3 = await ghWrite(path, d3, "Modif " + p.salarie);
+      return { ok: ok3 };
+    }
+    if (action === "reviewModif") {
+      var d4 = await ghRead(path) || {};
+      if (!d4.modifs) d4.modifs = [];
+      d4.modifs = d4.modifs.map(function(m){ return m.id === p.modifId ? Object.assign(m, { status: p.decision }) : m; });
+      var ok4 = await ghWrite(path, d4, "Review modif");
+      return { ok: ok4 };
+    }
+    if (action === "emarge") {
+      var d5 = await ghRead(path) || {};
+      if (!d5.emargements) d5.emargements = {};
+      d5.emargements[p.salarie] = { ts: Date.now(), sig: p.sig || "ok" };
+      var ok5 = await ghWrite(path, d5, "Emargement " + p.salarie);
+      return { ok: ok5 };
+    }
+    if (action === "getEmarg") {
+      var d6 = await ghRead(path);
+      return { ok: true, emargements: (d6 && d6.emargements) ? d6.emargements : {} };
+    }
+    return { ok: false, error: "Action inconnue" };
+  }
+
 
   /* toast */
   var _tel = null, _tt = null;
