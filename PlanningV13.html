@@ -432,31 +432,18 @@
       padding: 4px 2px;
     }
 
-    /* Badge emargement sur cellule planning */
     .emarg-badge {
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      width: 16px;
-      height: 16px;
-      background: #059669;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 9px;
-      color: #fff;
-      z-index: 10;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.25);
-      cursor: pointer;
-      pointer-events: all;
-      transition: background 0.2s;
+      position:absolute;top:2px;left:2px;
+      width:15px;height:15px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      font-size:9px;color:#fff;z-index:20;
+      cursor:pointer;pointer-events:all;
+      box-shadow:0 1px 3px rgba(0,0,0,.25);
+      transition:transform .15s;
     }
-    .emarg-badge:hover { transform: scale(1.2); }
-    .emarg-badge.locked {
-      background: #1e40af;
-      font-size: 10px;
-    }
+    .emarg-badge:hover{transform:scale(1.25);}
+    .emarg-badge.em-ok{background:#059669;}
+    .emarg-badge.em-lock{background:#1e40af;font-size:10px;}
 
     /* Bulle intérieure : input centré et bien proportionné */
     .timeCell input{
@@ -6066,9 +6053,8 @@ Cela remplacera toutes les données actuelles.`)) return;
             td.colSpan = 2;
             td.rowSpan = 1;
             td.style.cssText = "position:relative;padding:2px 3px;vertical-align:middle;cursor:pointer;";
-            td.dataset.wid = week.id;
-            td.dataset.ri  = rowIndex;
-            td.dataset.dk  = d.key;
+            td.dataset.ri = rowIndex;
+            td.dataset.dk = d.key;
 
             const hasHours = sh.s1 && sh.e1;
 
@@ -6147,11 +6133,6 @@ Cela remplacera toutes les données actuelles.`)) return;
                 }
                 td.appendChild(bubble);
               }
-              // Réappliquer badge émargement si présent
-              var _eKey = Object.keys(_lockedCells).find(function(k){
-                var e = k; return false; // sera géré par refreshEmargBadges
-              });
-              setTimeout(function(){ applyEmargBadgeToCell(td, rowIndex, d.key); }, 0);
             };
 
             const renderInputs = () => {
@@ -11925,6 +11906,70 @@ function __dlImg(btn){
   }
 
 
+
+  /* ── EMARGEMENT BADGES ── */
+  var _emargCache = {};
+  var _lockedCells = JSON.parse(localStorage.getItem("v13_locked") || "{}");
+
+  function saveLocked() { localStorage.setItem("v13_locked", JSON.stringify(_lockedCells)); }
+
+  function applyAllBadges() {
+    document.querySelectorAll(".emarg-badge").forEach(function(b){ b.remove(); });
+    var w = getWeek(); if (!w) return;
+    var model = w.model || [];
+    Object.keys(_emargCache).forEach(function(key) {
+      var e = _emargCache[key];
+      var nom = e.nom || key;
+      var dk  = e.dayKey || "lun";
+      var ri  = -1;
+      for (var i=0; i<model.length; i++) {
+        if (model[i] && model[i].name === nom) { ri = i; break; }
+      }
+      if (ri < 0) return;
+      var cell = document.querySelector(".timeCell[data-ri='" + ri + "'][data-dk='" + dk + "']");
+      if (!cell) return;
+      placeEmargBadge(cell, key, nom, dk);
+    });
+  }
+
+  function placeEmargBadge(cell, key, nom, dk) {
+    var old = cell.querySelector(".emarg-badge"); if (old) old.remove();
+    var locked = !!_lockedCells[key];
+    var b = document.createElement("div");
+    b.className = "emarg-badge " + (locked ? "em-lock" : "em-ok");
+    b.title = locked ? "Verrouill\u00e9 (2× clic pour d\u00e9verrouiller)" : "\u00c9marg\u00e9 (clic pour verrouiller)";
+    b.textContent = locked ? "\uD83D\uDD12" : "\u2713";
+    b.dataset.clicks = "0";
+    b.addEventListener("click", function(ev) {
+      ev.stopPropagation();
+      var n = parseInt(this.dataset.clicks||"0") + 1;
+      this.dataset.clicks = n;
+      if (!locked && n >= 1) {
+        _lockedCells[key] = true; saveLocked();
+        placeEmargBadge(cell, key, nom, dk);
+        toast("\uD83D\uDD12 " + nom + " — " + dk + " verrouill\u00e9", "#059669");
+      } else if (locked && n >= 2) {
+        _lockedCells[key] = false; saveLocked();
+        placeEmargBadge(cell, key, nom, dk);
+        toast("\uD83D\uDD13 " + nom + " — " + dk + " d\u00e9verrouill\u00e9", "#f97316");
+      }
+    });
+    cell.style.position = "relative";
+    cell.appendChild(b);
+  }
+
+  window.refreshEmargBadges = async function() {
+    var wid = _wid || localStorage.getItem("v13_wid");
+    if (!wid) return;
+    try {
+      var r = await fetch("https://raw.githubusercontent.com/kinitof/Planning-pro/main/data/" + wid + ".json?t=" + Date.now());
+      if (!r.ok) return;
+      var d = await r.json();
+      _emargCache = d.emargements || {};
+      applyAllBadges();
+    } catch(e) { console.error("refreshEmargBadges:", e); }
+  };
+
   /* toast */
   var _tel = null, _tt = null;
   function toast(msg, col) {
@@ -11982,7 +12027,7 @@ function __dlImg(btn){
       document.getElementById("btnV13suivi").style.display = "";
       document.getElementById("v13badge").style.display = "";
       poll(id);
-      refreshEmargBadges();
+      setTimeout(refreshEmargBadges, 1000);
       toast("\u2705 Semaine publi\u00E9e \u2014 " + emps.length + " lien(s)", "#059669");
     } catch(e) { toast("\u274C " + e.message, "#dc2626"); }
     finally { btn.textContent = "\u2601 Publier maintenant"; btn.disabled = false; }
@@ -12013,31 +12058,6 @@ function __dlImg(btn){
         });
       })(u, cpb);
       row.appendChild(inp); row.appendChild(cpb);
-
-      // Bouton mailto
-      if (t.email) {
-        var ww = getWeek();
-        var wl = ww ? (ww.label || id) : id;
-        var mgr = document.getElementById("v13em").value.trim() || "Votre responsable";
-        var mailBtn = document.createElement("button");
-        mailBtn.textContent = "\uD83D\uDCE7";
-        mailBtn.title = "Envoyer par email";
-        mailBtn.style.cssText = "background:#059669;color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:13px;cursor:pointer;flex-shrink:0;";
-        (function(email, lien, nom, semaine, manager) {
-          mailBtn.addEventListener("click", function() {
-            var subj = encodeURIComponent("Votre planning - Semaine du " + semaine);
-            var bod  = encodeURIComponent(
-              "Bonjour " + nom + ",\n\n" +
-              "Votre planning de la semaine du " + semaine + " est disponible.\n\n" +
-              "Consultez et emargez via ce lien :\n" + lien + "\n\n" +
-              "Bonne semaine !\n" + manager
-            );
-            window.location.href = "mailto:" + email + "?subject=" + subj + "&body=" + bod;
-          });
-        })(t.email, u, t.name, wl, mgr);
-        row.appendChild(mailBtn);
-      }
-
       card.appendChild(top); card.appendChild(row); el.appendChild(card);
     });
     open("v13lnk");
@@ -12061,124 +12081,6 @@ function __dlImg(btn){
       b.style.color = n ? "#c2410c" : "#059669"; b.style.borderColor = n ? "#fed7aa" : "#bbf7d0";
       var dot = b.querySelector(".v13dot"); if (dot) dot.style.display = n ? "" : "none";
     } catch(e) {}
-  }
-
-
-
-  /* ── BADGE EMARGEMENT PAR CELLULE ── */
-  var _emargData = {}; // cache des émargements {key: {nom, dayKey}}
-
-  function applyEmargBadgeToCell(cell, ri, dk) {
-    Object.keys(_emargData).forEach(function(key) {
-      var e = _emargData[key];
-      if (!e || !e.nom) return;
-      // Trouver le rowIndex du salarié
-      var w = getWeek();
-      if (!w) return;
-      var model = w.model || [];
-      var riSal = -1;
-      for (var i=0; i<model.length; i++) {
-        if (model[i] && model[i].name === e.nom) { riSal = i; break; }
-      }
-      if (riSal === ri && e.dayKey === dk) {
-        // Supprimer ancien badge
-        var old = cell.querySelector(".emarg-badge");
-        if (old) old.remove();
-        cell.style.position = "relative";
-        addLockBadge(cell, key, e.nom, e.dayKey);
-      }
-    });
-  }
-
-  /* ── BADGES EMARGEMENT ── */
-  var _lockedCells = JSON.parse(localStorage.getItem("v13_locked") || "{}");
-
-  function saveLocked() {
-    localStorage.setItem("v13_locked", JSON.stringify(_lockedCells));
-  }
-
-  function addLockBadge(cell, key, nom, dayKey) {
-    // Supprimer badge existant pour cette cellule
-    var old = cell.querySelector(".emarg-badge");
-    if (old) old.remove();
-    // S'assurer que la cellule est en position relative
-    cell.style.position = "relative";
-    cell.style.overflow = "visible";
-
-    var locked = _lockedCells[key] || false;
-    var badge = document.createElement("div");
-    badge.className = "emarg-badge" + (locked ? " locked" : "");
-    badge.title = locked ? "Verrouill\u00e9 — double-clic pour d\u00e9verrouiller" : "\u00c9marg\u00e9 — clic pour verrouiller";
-    badge.textContent = locked ? "\uD83D\uDD12" : "\u2713";
-    badge.dataset.key = key;
-    badge.dataset.clicks = "0";
-
-    badge.addEventListener("click", function(e) {
-      e.stopPropagation();
-      var clicks = parseInt(this.dataset.clicks) + 1;
-      this.dataset.clicks = clicks;
-      if (!locked && clicks === 1) {
-        // 1er clic : verrouiller
-        _lockedCells[key] = true;
-        saveLocked();
-        addLockBadge(cell, key, nom, dayKey);
-        toast("\uD83D\uDD12 " + nom + " — " + dayKey + " verrouill\u00e9", "#059669");
-      } else if (locked && clicks >= 2) {
-        // 2e clic : d\u00e9verrouiller
-        _lockedCells[key] = false;
-        saveLocked();
-        addLockBadge(cell, key, nom, dayKey);
-        toast("\uD83D\uDD13 " + nom + " — " + dayKey + " d\u00e9verrouill\u00e9", "#f97316");
-      }
-    });
-    cell.appendChild(badge);
-  }
-
-  window.refreshEmargBadges = refreshEmargBadges;
-  async function refreshEmargBadges() {
-    // Récupérer weekId depuis _wid interne ou localStorage
-    var wid = _wid || localStorage.getItem("v13_wid");
-    if (!wid) { console.log("refreshEmargBadges: pas de wid"); return; }
-    try {
-      // Lire directement depuis GitHub sans passer par gs()
-      var url = "https://raw.githubusercontent.com/kinitof/Planning-pro/main/data/" + wid + ".json";
-      var r = await fetch(url);
-      if (!r.ok) { console.log("refreshEmargBadges: fichier non trouvé", wid); return; }
-      var d = await r.json();
-      var ea = d.emargements || {};
-      console.log("refreshEmargBadges: emargements=", JSON.stringify(ea));
-      // Mettre à jour le cache
-      _emargData = ea;
-
-      // Supprimer anciens badges
-      document.querySelectorAll(".emarg-badge").forEach(function(b){ b.remove(); });
-
-      // Mapper nom -> rowIndex via les cellules existantes
-      Object.keys(ea).forEach(function(key) {
-        var e = ea[key];
-        var nom = (e && e.nom) ? e.nom : key;
-        var dayKey = (e && e.dayKey) ? e.dayKey : "lun";
-        console.log("Badge pour:", nom, dayKey);
-
-        // Trouver toutes les timeCell avec ce dayKey
-        var cells = document.querySelectorAll(".timeCell[data-dk='" + dayKey + "']");
-        console.log("Cellules trouvées pour dk=" + dayKey + ":", cells.length);
-
-        // Trouver le bon rowIndex en cherchant le nom du salarié dans la ligne
-        cells.forEach(function(cell) {
-          var ri = cell.getAttribute("data-ri");
-          // Chercher le nom dans la même ligne TR
-          var tr = cell.closest("tr");
-          if (!tr) return;
-          var nameEl = tr.querySelector(".empName, [class*='empN'], td:first-child");
-          var rowText = tr.textContent || "";
-          if (rowText.indexOf(nom) > -1) {
-            addLockBadge(cell, key, nom, dayKey);
-            console.log("Badge ajouté sur ri=" + ri + " dk=" + dayKey);
-          }
-        });
-      });
-    } catch(e) { console.error("refreshEmargBadges erreur:", e); }
   }
 
   /* ── SUIVI ── */
