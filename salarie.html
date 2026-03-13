@@ -51,7 +51,6 @@ body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;background:#f1f5f9;min
 .ss h2{font-size:17px;font-weight:800;color:#1a1f3a;margin-bottom:7px;}
 .ss p{font-size:13px;color:#64748b;line-height:1.6;max-width:300px;}
 </style>
-  <script src="config.js"></script>
 </head>
 <body>
 <div id="toast"></div>
@@ -96,8 +95,48 @@ var empData={}, weekData={}, shifts={}, emargMap={}, modifMap={}, curDay=null;
 
 /* ── appel serveur ── */
 async function gs(p){
-  var r=await fetch(GS_WEBHOOK,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(p)});
-  var t=await r.text(); try{return JSON.parse(t);}catch(e){return{ok:false,error:t};}
+  var action = p.action;
+  var weekId = p.weekId || "";
+  var rawUrl = "https://raw.githubusercontent.com/kinitof/Planning-pro/main/data/" + weekId + ".json";
+
+  if (action === "getPlanning") {
+    var r = await fetch(rawUrl);
+    if (r.status === 404) return { ok:true, data:null };
+    var d = await r.json();
+    return { ok:true, data:d };
+  }
+  if (action === "proposeModif" || action === "emarge") {
+    // Ecriture via token stocké localement
+    var token = window.GH_TOKEN || "";
+    if (!token) return { ok:false, error:"Token manquant" };
+    var apiUrl = "https://api.github.com/repos/kinitof/Planning-pro/contents/data/" + weekId + ".json";
+    var sha = null;
+    var existing = null;
+    var r0 = await fetch(apiUrl + "?ref=main", {
+      headers: { "Authorization": "token " + token, "Accept": "application/vnd.github.v3+json" }
+    });
+    if (r0.ok) { var d0 = await r0.json(); sha = d0.sha; existing = JSON.parse(atob(d0.content.replace(/\n/g,""))); }
+    if (!existing) existing = {};
+    if (action === "proposeModif") {
+      if (!existing.modifs) existing.modifs = [];
+      p.id = Date.now(); p.status = "pending";
+      existing.modifs.push(p);
+    }
+    if (action === "emarge") {
+      if (!existing.emargements) existing.emargements = {};
+      existing.emargements[p.salarie] = { ts: Date.now() };
+    }
+    var content = btoa(unescape(encodeURIComponent(JSON.stringify(existing, null, 2))));
+    var body = { message: action, content: content, branch: "main" };
+    if (sha) body.sha = sha;
+    var r2 = await fetch(apiUrl, {
+      method: "PUT",
+      headers: { "Authorization": "token " + token, "Accept": "application/vnd.github.v3+json", "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    return { ok: r2.ok };
+  }
+  return { ok:false, error:"Action inconnue" };
 }
 
 /* ── init ── */
