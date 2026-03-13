@@ -6147,6 +6147,11 @@ Cela remplacera toutes les données actuelles.`)) return;
                 }
                 td.appendChild(bubble);
               }
+              // Réappliquer badge émargement si présent
+              var _eKey = Object.keys(_lockedCells).find(function(k){
+                var e = k; return false; // sera géré par refreshEmargBadges
+              });
+              setTimeout(function(){ applyEmargBadgeToCell(td, rowIndex, d.key); }, 0);
             };
 
             const renderInputs = () => {
@@ -12059,6 +12064,32 @@ function __dlImg(btn){
   }
 
 
+
+  /* ── BADGE EMARGEMENT PAR CELLULE ── */
+  var _emargData = {}; // cache des émargements {key: {nom, dayKey}}
+
+  function applyEmargBadgeToCell(cell, ri, dk) {
+    Object.keys(_emargData).forEach(function(key) {
+      var e = _emargData[key];
+      if (!e || !e.nom) return;
+      // Trouver le rowIndex du salarié
+      var w = getWeek();
+      if (!w) return;
+      var model = w.model || [];
+      var riSal = -1;
+      for (var i=0; i<model.length; i++) {
+        if (model[i] && model[i].name === e.nom) { riSal = i; break; }
+      }
+      if (riSal === ri && e.dayKey === dk) {
+        // Supprimer ancien badge
+        var old = cell.querySelector(".emarg-badge");
+        if (old) old.remove();
+        cell.style.position = "relative";
+        addLockBadge(cell, key, e.nom, e.dayKey);
+      }
+    });
+  }
+
   /* ── BADGES EMARGEMENT ── */
   var _lockedCells = JSON.parse(localStorage.getItem("v13_locked") || "{}");
 
@@ -12116,6 +12147,8 @@ function __dlImg(btn){
       var d = await r.json();
       var ea = d.emargements || {};
       console.log("refreshEmargBadges: emargements=", JSON.stringify(ea));
+      // Mettre à jour le cache
+      _emargData = ea;
 
       // Supprimer anciens badges
       document.querySelectorAll(".emarg-badge").forEach(function(b){ b.remove(); });
