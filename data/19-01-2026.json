@@ -2,11 +2,11 @@
   "action": "publishWeek",
   "weekId": "19-01-2026",
   "weekLabel": "19/01/2026",
-  "weekData": "{\"id\":\"448b0b12\",\"label\":\"19/01/2026\",\"model\":[{\"name\":\"SalariÃÂÃÂ©\",\"base\":\"35:00\",\"shifts\":{\"lun\":{\"s1\":\"07:00\",\"e1\":\"11:00\",\"s2\":\"11:30\",\"e2\":\"14:30\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"mar\":{\"s1\":\"07:00\",\"e1\":\"11:00\",\"s2\":\"11:30\",\"e2\":\"14:30\",\"status\":\"CUSTOM:OUV VENTE\",\"paidMin\":420,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"mer\":{\"s1\":\"07:00\",\"e1\":\"11:00\",\"s2\":\"11:30\",\"e2\":\"14:30\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"jeu\":{\"s1\":\"\",\"e1\":\"\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"ven\":{\"s1\":\"\",\"e1\":\"\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"sam\":{\"s1\":\"\",\"e1\":\"\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"dim\":{\"s1\":\"\",\"e1\":\"\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"}},\"cumul\":-1680,\"_weekStatus\":null,\"_cumulStatus\":\"real\",\"poste1\":\"Vente\",\"poste2\":\"\",\"email\":\"christophe.bern123@gmail.com\",\"phone\":\"\",\"cumulDepart\":-840}],\"_status\":\"has_data\"}",
+  "weekData": "{\"id\":\"448b0b12\",\"label\":\"19/01/2026\",\"model\":[{\"name\":\"SalariÃÂÃÂÃÂÃÂ©\",\"base\":\"35:00\",\"shifts\":{\"lun\":{\"s1\":\"07:00\",\"e1\":\"11:00\",\"s2\":\"11:30\",\"e2\":\"14:30\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"mar\":{\"s1\":\"07:00\",\"e1\":\"11:00\",\"s2\":\"11:30\",\"e2\":\"14:30\",\"status\":\"CUSTOM:OUV VENTE\",\"paidMin\":420,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"mer\":{\"s1\":\"07:00\",\"e1\":\"11:00\",\"s2\":\"11:30\",\"e2\":\"14:30\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"jeu\":{\"s1\":\"\",\"e1\":\"\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"ven\":{\"s1\":\"\",\"e1\":\"\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"sam\":{\"s1\":\"\",\"e1\":\"\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"dim\":{\"s1\":\"\",\"e1\":\"\",\"s2\":\"\",\"e2\":\"\",\"status\":\"\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"}},\"cumul\":-1680,\"_weekStatus\":null,\"_cumulStatus\":\"real\",\"poste1\":\"Vente\",\"poste2\":\"\",\"email\":\"christophe.bern123@gmail.com\",\"phone\":\"\",\"cumulDepart\":-840}],\"_status\":\"has_data\"}",
   "managerEmail": "christophe.bern37@gmail.com",
   "employees": [
     {
-      "name": "SalariÃÂÃÂ©",
+      "name": "SalariÃÂÃÂÃÂÃÂ©",
       "email": "christophe.bern123@gmail.com",
       "phone": "",
       "token": "w2nl7r6zmmqw8ywx"
@@ -17,12 +17,20 @@
       "action": "proposeModif",
       "weekId": "19-01-2026",
       "token": "w2nl7r6zmmqw8ywx",
-      "empName": "SalariÃÂ©",
+      "empName": "SalariÃÂÃÂ©",
       "dayKey": "lun",
-      "originalShift": "07:00Ã¢ÂÂ11:00 / 11:30Ã¢ÂÂ14:30",
+      "originalShift": "07:00ÃÂ¢ÃÂÃÂ11:00 / 11:30ÃÂ¢ÃÂÃÂ14:30",
       "proposedShift": "07:00-11:00/12:00-16:00",
       "motif": "rdv",
       "id": 1773527273194
     }
-  ]
+  ],
+  "emargements": {
+    "Salarié_lun": {
+      "nom": "Salarié",
+      "dayKey": "lun",
+      "ts": 1773527414381,
+      "signedAt": "2026-03-14T22:30:14.373Z"
+    }
+  }
 }
