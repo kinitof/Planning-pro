@@ -2,19 +2,19 @@
   "action": "publishWeek",
   "weekId": "19-01-2026",
   "weekLabel": "19/01/2026",
-  "weekData": "{\"id\":\"448b0b12\",\"label\":\"19/01/2026\",\"model\":[{\"name\":\"SalariÃÂ©\",\"base\":\"35:00\",\"shifts\":{\"lun\":{\"s1\":\"07:00\",\"e1\":\"11:00\",\"s2\":\"11:30\",\"e2\":\"14:30\",\"status\":\"CUSTOM:OUV VENTE\",\"paidMin\":420,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"mar\":{\"s1\":\"07:00\",\"e1\":\"11:00\",\"s2\":\"11:30\",\"e2\":\"14:30\",\"status\":\"CUSTOM:OUV VENTE\",\"paidMin\":420,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"mer\":{\"s1\":\"07:00\",\"e1\":\"11:00\",\"s2\":\"11:30\",\"e2\":\"14:30\",\"status\":\"CUSTOM:OUV VENTE\",\"paidMin\":420,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"jeu\":{\"s1\":\"07:00\",\"e1\":\"11:00\",\"s2\":\"11:30\",\"e2\":\"14:30\",\"status\":\"CUSTOM:OUV VENTE\",\"paidMin\":420,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"ven\":{\"s1\":\"07:00\",\"e1\":\"11:00\",\"s2\":\"11:30\",\"e2\":\"14:30\",\"status\":\"CUSTOM:OUV VENTE\",\"paidMin\":420,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"sam\":{\"s1\":\"07:00\",\"e1\":\"11:00\",\"s2\":\"11:30\",\"e2\":\"14:30\",\"status\":\"REPOS\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"dim\":{\"s1\":\"\",\"e1\":\"\",\"s2\":\"\",\"e2\":\"\",\"status\":\"REPOS\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"}},\"cumul\":-840,\"_weekStatus\":null,\"_cumulStatus\":\"real\",\"poste1\":\"Vente\",\"poste2\":\"\",\"email\":\"christophe.bern123@gmail.com\",\"phone\":\"\",\"cumulDepart\":-840}],\"_status\":\"has_data\"}",
+  "weekData": "{\"id\":\"448b0b12\",\"label\":\"19/01/2026\",\"model\":[{\"name\":\"SalariÃÂÃÂ©\",\"base\":\"35:00\",\"shifts\":{\"lun\":{\"s1\":\"07:00\",\"e1\":\"11:00\",\"s2\":\"11:30\",\"e2\":\"14:30\",\"status\":\"CUSTOM:OUV VENTE\",\"paidMin\":420,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"mar\":{\"s1\":\"07:00\",\"e1\":\"11:00\",\"s2\":\"11:30\",\"e2\":\"14:30\",\"status\":\"CUSTOM:OUV VENTE\",\"paidMin\":420,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"mer\":{\"s1\":\"07:00\",\"e1\":\"11:00\",\"s2\":\"11:30\",\"e2\":\"14:30\",\"status\":\"CUSTOM:OUV VENTE\",\"paidMin\":420,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"jeu\":{\"s1\":\"07:00\",\"e1\":\"11:00\",\"s2\":\"11:30\",\"e2\":\"14:30\",\"status\":\"CUSTOM:OUV VENTE\",\"paidMin\":420,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"ven\":{\"s1\":\"07:00\",\"e1\":\"11:00\",\"s2\":\"11:30\",\"e2\":\"14:30\",\"status\":\"CUSTOM:OUV VENTE\",\"paidMin\":420,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"sam\":{\"s1\":\"07:00\",\"e1\":\"11:00\",\"s2\":\"11:30\",\"e2\":\"14:30\",\"status\":\"REPOS\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"},\"dim\":{\"s1\":\"\",\"e1\":\"\",\"s2\":\"\",\"e2\":\"\",\"status\":\"REPOS\",\"paidMin\":0,\"adjMin\":0,\"adjAnnualMin\":0,\"jfType\":\"autre\",\"jfSeniorite\":false,\"jfWorkedMin\":0,\"jfStart\":\"\",\"jfEnd\":\"\",\"jfPause\":\"\"}},\"cumul\":-840,\"_weekStatus\":null,\"_cumulStatus\":\"real\",\"poste1\":\"Vente\",\"poste2\":\"\",\"email\":\"christophe.bern123@gmail.com\",\"phone\":\"\",\"cumulDepart\":-840}],\"_status\":\"has_data\"}",
   "managerEmail": "christophe.bern37@gmail.com",
   "employees": [
     {
-      "name": "SalariÃÂ©",
+      "name": "SalariÃÂÃÂ©",
       "email": "christophe.bern123@gmail.com",
       "phone": "",
       "token": "l9eqqulwmmtmef1u"
     }
   ],
   "emargements": {
-    "SalariÃ©_mar": {
-      "nom": "SalariÃ©",
+    "SalariÃÂ©_mar": {
+      "nom": "SalariÃÂ©",
       "dayKey": "mar",
       "ts": 1773692117595,
       "signedAt": "2026-03-16T20:15:17.466Z"
@@ -25,14 +25,13 @@
       "action": "proposeModif",
       "weekId": "19-01-2026",
       "token": "l9eqqulwmmtmef1u",
-      "salarie": "Salarié",
-      "empName": "Salarié",
+      "salarie": "SalariÃ©",
+      "empName": "SalariÃ©",
       "dayKey": "lun",
-      "originalShift": "OUV VENTE 07:00→11:00 / 11:30→14:30",
+      "originalShift": "OUV VENTE 07:00â11:00 / 11:30â14:30",
       "proposedShift": "07:00-11:00/11:30-14:30",
       "motif": "rdv",
-      "id": 1773692189221,
-      "status": "pending"
+      "id": 1773692189221
     }
   ]
 }
